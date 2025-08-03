@@ -32,7 +32,7 @@ app.post('/api/shorturl',(req,res)=>{
   const hostname=urlParser.parse(originalUrl).hostname;
   dns.lookup(hostname,(err)=>{
     if(err){
-      return res,json({error:'invalid url'});
+      return res.json({error:'invalid url'});
     }
     const shortUrl=currentid++;
     urlDatabase[shortUrl]=originalUrl;
@@ -44,11 +44,11 @@ app.post('/api/shorturl',(req,res)=>{
 });
 app.get('/api/shorturl/:id',(req,res)=>{
   const shorturl=req.params.id;
-  const originalurl=urlDatabase[shortUrl];
+  const originalurl=urlDatabase[shorturl];
   if(originalurl){
-    res.redirect(originalUrl);
+    res.redirect(originalurl);
   }else{
-    req.json({error:'No short Url founf for given input'});
+    res.json({error:'No short Url founf for given input'});
   }
 });
 app.listen(port, function() {
